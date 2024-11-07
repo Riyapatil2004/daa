@@ -1,0 +1,70 @@
+#fibonacci code with series:
+
+
+# Non-Recursive Fibonacci Function
+def fibonacci_non_recursive(n):
+    if n <= 0:
+        return 0
+    elif n == 1:
+        return 1
+    a, b = 0, 1
+    fib_series = [a, b]
+    for _ in range(2, n + 1):
+        a, b = b, a + b
+        fib_series.append(b)
+    return fib_series
+
+# Recursive Fibonacci Function
+def fibonacci_recursive(n, fib_series=None):
+    if fib_series is None:
+        fib_series = [0, 1]  # Start with the first two Fibonacci numbers
+    if n <= 0:
+        return [0]
+    elif n == 1:
+        return fib_series
+    # Generate next Fibonacci number and append to the series
+    fib_series.append(fib_series[-1] + fib_series[-2])
+    return fibonacci_recursive(n - 1, fib_series)
+
+# Time and Space Complexity Analysis
+def analyze_complexity():
+    print("\nNon-Recursive Fibonacci:")
+    print("Time Complexity: O(n)")
+    print("Space Complexity: O(n)")
+
+    print("\nRecursive Fibonacci:")
+    print("Time Complexity: O(2^n)")
+    print("Space Complexity: O(n)")
+
+# Example Usage
+n = int(input('Enter a number: '))
+
+# Non-recursive Fibonacci Series and Number
+non_recursive_series = fibonacci_non_recursive(n)
+print(f"Non-Recursive Fibonacci Series of {n}: {non_recursive_series}")
+print(f"Non-Recursive Fibonacci of {n} is: {non_recursive_series[-1]}")
+
+# Recursive Fibonacci Series and Number
+recursive_series = fibonacci_recursive(n)
+print(f"Recursive Fibonacci Series of {n}: {recursive_series}")
+print(f"Recursive Fibonacci of {n} is: {recursive_series[-1]}")
+
+# Time and Space Complexity Analysis
+analyze_complexity()
+
+Output:
+Enter a number: 10
+Non-Recursive Fibonacci Series of 10: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+Non-Recursive Fibonacci of 10 is: 55
+Recursive Fibonacci Series of 10: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+Recursive Fibonacci of 10 is: 55
+
+Non-Recursive Fibonacci:
+Time Complexity: O(n)
+Space Complexity: O(n)
+
+Recursive Fibonacci:
+Time Complexity: O(2^n)
+Space Complexity: O(n)
+
+=== Code Execution Successful ===

@@ -1,0 +1,53 @@
+#fractioanl knapsack without ratio(me)
+
+def fractional_knapsack(capacity, profits, weights):
+    items = sorted(zip(profits, weights), key=lambda x: x[0]/x[1], reverse=True)
+    total_value = 0.0
+
+    for profit, weight in items:
+        if capacity >= weight:
+            total_value += profit
+            capacity -= weight
+        else:
+            total_value += profit * (capacity / weight)
+            break
+
+    return total_value
+
+def main():
+    n = int(input("Enter the number of items: "))
+    
+    profits = []
+    weights = []
+
+    for i in range(n):
+        profit = int(input(f"Enter profit of item {i + 1}: "))
+        weight = int(input(f"Enter weight of item {i + 1}: "))
+        profits.append(profit)
+        weights.append(weight)
+    
+    capacity = int(input("Enter the capacity of the knapsack: "))
+    max_value = fractional_knapsack(capacity, profits, weights)
+    
+    print(f"Maximum value in knapsack: {max_value}")
+
+if __name__ == "__main__":
+    main()
+
+
+output:
+Enter the number of items: 5
+Enter profit of item 1: 30
+Enter weight of item 1: 5
+Enter profit of item 2: 40
+Enter weight of item 2: 10
+Enter profit of item 3: 45
+Enter weight of item 3: 15
+Enter profit of item 4: 77
+Enter weight of item 4: 22
+Enter profit of item 5: 90
+Enter weight of item 5: 25
+Enter the capacity of the knapsack: 60
+Maximum value in knapsack: 230.0
+
+=== Code Execution Successful ===

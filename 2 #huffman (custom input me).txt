@@ -1,0 +1,77 @@
+#huffman (custom input me)
+
+import heapq
+
+class Node:
+    def __init__(self, freq, symbol, left=None, right=None):
+        self.freq = freq  
+        self.symbol = symbol  
+        self.left = left  
+        self.right = right  
+        self.huff = ""  
+    
+    def __lt__(self, other):
+        return self.freq < other.freq  
+
+def print_huffman_codes(node, val=""):
+    newval = val + node.huff
+    if node.left:
+        print_huffman_codes(node.left, newval)
+    if node.right:
+        print_huffman_codes(node.right, newval)
+    else:
+        print(f"{node.symbol} -> {newval}")
+
+def main():
+    num_chars = int(input("Enter the number of characters: "))
+    
+    chars = []
+    freqs = []
+    
+    for i in range(num_chars):
+        char = input(f"Enter character {i + 1}: ")
+        freq = int(input(f"Enter frequency of character '{char}': "))
+        chars.append(char)
+        freqs.append(freq)
+    
+    nodes = []
+    for i in range(len(chars)):
+        heapq.heappush(nodes, Node(freqs[i], chars[i]))
+
+    while len(nodes) > 1:
+        left = heapq.heappop(nodes)
+        right = heapq.heappop(nodes)
+        
+        left.huff = "0"
+        right.huff = "1"
+        
+        newnode = Node(left.freq + right.freq, left.symbol + right.symbol, left, right)
+        heapq.heappush(nodes, newnode)
+
+    print_huffman_codes(nodes[0])
+
+if __name__ == '__main__':
+    main()
+
+output:
+Enter the number of characters: 6
+Enter character 1: a
+Enter frequency of character 'a': 5
+Enter character 2: b
+Enter frequency of character 'b': 9
+Enter character 3: c
+Enter frequency of character 'c': 12
+Enter character 4: d
+Enter frequency of character 'd': 13
+Enter character 5: e
+Enter frequency of character 'e': 16
+Enter character 6: f
+Enter frequency of character 'f': 45
+f -> 0
+c -> 100
+d -> 101
+a -> 1100
+b -> 1101
+e -> 111
+
+=== Code Execution Successful ===

@@ -1,0 +1,81 @@
+#fractional knapsack with fraction(me)
+
+
+
+def fractional_knapsack(capacity, profits, weights):
+    n = len(profits)
+    items = []
+    
+    # Create a list of items with profit, weight, and their ratio (profit/weight)
+    for i in range(n):
+        ratio = profits[i] / weights[i] if weights[i] != 0 else 0
+        items.append((profits[i], weights[i], ratio, i))  # Add index to track original item
+    
+    # Sort items by profit/weight ratio in descending order
+    items.sort(key=lambda x: x[2], reverse=True)
+    
+    total_value = 0.0
+    fractions = [0] * n  # To store the fraction taken of each item
+    
+    for profit, weight, _, index in items:
+        if capacity >= weight:
+            total_value += profit
+            capacity -= weight
+            fractions[index] = 1.0  # Take the whole item
+        else:
+            total_value += profit * (capacity / weight)
+            fractions[index] = capacity / weight  # Take fraction of the item
+            break
+
+    return total_value, fractions
+
+def main():
+    n = int(input("Enter the number of items: "))
+    
+    profits = []
+    weights = []
+
+    for i in range(n):
+        profit = int(input(f"Enter profit of item {i + 1}: "))
+        weight = int(input(f"Enter weight of item {i + 1}: "))
+        profits.append(profit)
+        weights.append(weight)
+    
+    capacity = int(input("Enter the capacity of the knapsack: "))
+    max_value, fractions = fractional_knapsack(capacity, profits, weights)
+    
+    # Display the profit/weight ratio (fraction) for each item
+    for i in range(n):
+        ratio = profits[i] / weights[i] if weights[i] != 0 else 0
+        print(f"Item {i + 1}: Weight = {weights[i]}, Profit = {profits[i]}, Profit/Weight Ratio = {ratio:.2f}")
+    
+    # Then display the maximum value in the knapsack
+    print(f"\nMaximum value in knapsack: {max_value}")
+
+if __name__ == "__main__":
+    main()
+
+
+output:
+
+Enter the number of items: 5
+Enter profit of item 1: 30
+Enter weight of item 1: 5
+Enter profit of item 2: 40
+Enter weight of item 2: 10
+Enter profit of item 3: 45
+Enter weight of item 3: 15
+Enter profit of item 4: 77
+Enter weight of item 4: 22
+Enter profit of item 5: 90
+Enter weight of item 5: 25
+Enter the capacity of the knapsack: 60
+Item 1: Weight = 5, Profit = 30, Profit/Weight Ratio = 6.00
+Item 2: Weight = 10, Profit = 40, Profit/Weight Ratio = 4.00
+Item 3: Weight = 15, Profit = 45, Profit/Weight Ratio = 3.00
+Item 4: Weight = 22, Profit = 77, Profit/Weight Ratio = 3.50
+Item 5: Weight = 25, Profit = 90, Profit/Weight Ratio = 3.60
+
+Maximum value in knapsack: 230.0
+
+=== Code Execution Successful ===
